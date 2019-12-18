@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { Game } from './game/main';
+import { Game } from './game/game';
 
 @Component({
   selector: 'my-app',
@@ -10,9 +11,17 @@ import { Game } from './game/main';
 export class AppComponent  implements OnInit{
   name = 'Angular';
 
-  ngOnInit(){
-    let game = new Game();
+  constructor(private router:Router){
 
-    game.start("canvas");
+  }
+
+  ngOnInit(){
+    let game = new Game("canvas");
+    game.start();
+
+    game.actionRequired.subscribe(action => {
+      console.log(action);
+      this.router.navigate([action]);
+    })
   }
 }
