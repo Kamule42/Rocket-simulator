@@ -7,9 +7,11 @@ import { MenuComponent as AMenuComponent} from './menu-component';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent {
+
+  displayed: boolean = false;
 
   @ViewChild(MenuDirective, {static: true})
   menuHost: MenuDirective;
@@ -19,16 +21,19 @@ export class MenuComponent {
     menuService: MenuService
   ) {
     menuService.activeMenu.subscribe(menu => {
-      console.log(menu);
+      console.log("menu to display", menu);
+      const viewContainerRef = this.menuHost.viewContainerRef;
+      if(viewContainerRef){
+        viewContainerRef.clear();
+      }
       if(menu === null){
         return;
       }
       const componentFactory = componentFactoryResolver.resolveComponentFactory(menu.component);
-      const viewContainerRef = this.menuHost.viewContainerRef;
-      viewContainerRef.clear();
 
       const componentRef = viewContainerRef.createComponent(componentFactory);
       (<AMenuComponent>componentRef.instance).data = menu.data;
+      displayed = true;
     });
   }
 }
