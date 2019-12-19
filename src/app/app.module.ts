@@ -14,5 +14,6 @@ import { MenuComponent } from './menu/menu.component';
   declarations: [
     AppComponent, MainMenuComponent, MenuDirective, MenuComponent, ],
   bootstrap:    [ AppComponent ],
+  entryComponents: [MainMenuComponent],
 })
 export class AppModule { }
