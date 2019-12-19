@@ -1,6 +1,7 @@
 import { Scene } from 'excalibur';
 
 import { Game } from '../../game';
+import { MENUS } from '../../../menu/menu.service';
 
 export class HomeScene extends Scene{
   
@@ -12,6 +13,6 @@ export class HomeScene extends Scene{
 
   public onActivate(){
     console.log("Scene Home activated")
-    this.game.actionRequired.next("main-menu");
+    this.game.actionRequired.next(MENUS.MAIN);
   }
 }

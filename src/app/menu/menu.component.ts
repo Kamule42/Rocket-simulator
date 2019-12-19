@@ -1,34 +1,34 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild, ComponentFactoryResolver } from '@angular/core';
 
 import { MenuDirective} from '../directives/menu.directive';
+import { MenuService } from './menu.service';
+import { MenuComponent as AMenuComponent} from './menu-component';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent {
 
   @ViewChild(MenuDirective, {static: true})
   menuHost: MenuDirective;
 
-  constructor() { }
+  constructor(
+    componentFactoryResolver: ComponentFactoryResolver,
+    menuService: MenuService
+  ) {
+    menuService.activeMenu.subscribe(menu => {
+      console.log(menu);
+      if(menu === null){
+        return;
+      }
+      const componentFactory = componentFactoryResolver.resolveComponentFactory(menu.component);
+      const viewContainerRef = this.menuHost.viewContainerRef;
+      viewContainerRef.clear();
 
-  ngOnInit() {
-    this.loadComponent();
+      const componentRef = viewContainerRef.createComponent(componentFactory);
+      (<AMenuComponent>componentRef.instance).data = menu.data;
+    });
   }
-
-  loadComponent() {
-    /*this.currentAdIndex = (this.currentAdIndex + 1) % this.ads.length;
-    const adItem = this.ads[this.currentAdIndex];
-
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(adItem.component);
-
-    const viewContainerRef = this.menuHost.viewContainerRef;
-    viewContainerRef.clear();
-
-    const componentRef = viewContainerRef.createComponent(componentFactory);
-    (<AdComponent>componentRef.instance).data = adItem.data;*/
-  }
-
 }

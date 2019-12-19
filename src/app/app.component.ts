@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { Game } from './game/game';
+import { MenuService } from './menu/menu.service';
 
 @Component({
   selector: 'my-app',
@@ -10,8 +10,8 @@ import { Game } from './game/game';
 })
 export class AppComponent  implements OnInit{
   name = 'Angular';
-
-  constructor(private router:Router){
+  activeMenu;
+  constructor(private menu:MenuService){
 
   }
 
@@ -21,7 +21,7 @@ export class AppComponent  implements OnInit{
 
     game.actionRequired.subscribe(action => {
       console.log(action);
-      setTimeout(() => this.router.navigate(['/'+action]), 0);
+      this.menu.activateMenu(action);
     })
   }
 }
