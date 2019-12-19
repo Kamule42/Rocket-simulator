@@ -11,16 +11,17 @@ import { MenuComponent as AMenuComponent} from './menu-component';
 })
 export class MenuComponent {
 
-  displayed: boolean = false;
-
-  @ViewChild(MenuDirective, {static: true})
-  menuHost: MenuDirective;
+  @ViewChild(MenuDirective, {static: true}) menuHost: MenuDirective;
 
   constructor(
     componentFactoryResolver: ComponentFactoryResolver,
     menuService: MenuService
   ) {
     menuService.activeMenu.subscribe(menu => {
+      if (!this.menuHost){
+        console.log("menu host empty");
+        return;
+      }
       console.log("menu to display", menu);
       const viewContainerRef = this.menuHost.viewContainerRef;
       if(viewContainerRef){
@@ -33,7 +34,6 @@ export class MenuComponent {
 
       const componentRef = viewContainerRef.createComponent(componentFactory);
       (<AMenuComponent>componentRef.instance).data = menu.data;
-      displayed = true;
     });
   }
 }

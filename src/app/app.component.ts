@@ -4,7 +4,7 @@ import { Game } from './game/game';
 import { MenuService } from './menu/menu.service';
 
 @Component({
-  selector: 'my-app',
+  selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: [ './app.component.css' ]
 })
@@ -16,11 +16,11 @@ export class AppComponent  implements OnInit{
   }
 
   ngOnInit(){
-    let game = new Game("canvas");
+    const game = new Game("canvas");
     game.start();
 
     game.actionRequired.subscribe(action => {
-      console.log(action);
+      console.log("action required : ", action);
       this.menu.activateMenu(action);
     })
   }

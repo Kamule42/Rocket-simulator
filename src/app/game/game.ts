@@ -1,19 +1,19 @@
 import {Engine, Color, DisplayMode} from 'excalibur';
-import { Subject  } from 'rxjs';
+import { BehaviorSubject  } from 'rxjs';
 
 import { HomeScene } from './scenes/index';
-import { Menu } from '../menu/menu.service';
+import { MENUS } from '../menu/menu.service';
 
 export class Game extends Engine{
 
-  public actionRequired:Subject <Menu> = new Subject<Menu>();
+  public actionRequired: BehaviorSubject<MENUS> = new BehaviorSubject<MENUS>(null);
 
   constructor(canvas: string){
     super({
         canvasElementId: canvas,
         width: 1000,
         height: 1000,
-        displayMode: DisplayMode.Container,  
+        displayMode: DisplayMode.Container,
     })
     this.backgroundColor = Color.fromHex("0A0863");
 
