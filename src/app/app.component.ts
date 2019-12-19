@@ -21,7 +21,7 @@ export class AppComponent  implements OnInit{
 
     game.actionRequired.subscribe(action => {
       console.log(action);
-      this.router.navigate([action]);
+      setTimeout(() => this.router.navigate(['/'+action]), 0);
     })
   }
 }
