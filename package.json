@@ -12,6 +12,7 @@
     "@angular/router": "^8.0.0",
     "core-js": "2",
     "excalibur": "^0.23.0",
+    "purecss": "^1.0.1",
     "rxjs": "^6.5.2",
     "zone.js": "^0.9.1"
   },
