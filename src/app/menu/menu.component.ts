@@ -1,8 +1,11 @@
-import { Component, ViewChild, ComponentFactoryResolver } from '@angular/core';
+import { Component, ViewChild, ComponentFactoryResolver, Injector, Output, EventEmitter  } from '@angular/core';
+
+import { Observable, Subscription } from 'rxjs';
 
 import { MenuDirective} from '../directives/menu.directive';
 import { MenuService } from './menu.service';
 import { MenuComponent as AMenuComponent} from './menu-component';
+import {Actions } from './action.enum';
 
 @Component({
   selector: 'app-menu',
@@ -11,18 +14,27 @@ import { MenuComponent as AMenuComponent} from './menu-component';
 })
 export class MenuComponent {
 
-  @ViewChild(MenuDirective, {static: true}) menuHost: MenuDirective;
+  @ViewChild(MenuDirective, {static: true})
+  menuHost: MenuDirective;
+
+  @Output()
+  actionRequired = new EventEmitter<Actions>();
+
+  private menuSub$: Subscription;
 
   constructor(
-    componentFactoryResolver: ComponentFactoryResolver,
+    private injector: Injector , 
+    private componentFactoryResolver: ComponentFactoryResolver,
     menuService: MenuService
   ) {
-    menuService.activeMenu.subscribe(menu => {
+    console.log(injector);
+    menuService.activeMenu.subscribe(menu => this.loadMenu(menu));
+  }
+
+  private loadMenu(menu){
       if (!this.menuHost){
-        console.log("menu host empty");
         return;
       }
-      console.log("menu to display", menu);
       const viewContainerRef = this.menuHost.viewContainerRef;
       if(viewContainerRef){
         viewContainerRef.clear();
@@ -30,10 +42,14 @@ export class MenuComponent {
       if(menu === null){
         return;
       }
-      const componentFactory = componentFactoryResolver.resolveComponentFactory(menu.component);
-
-      const componentRef = viewContainerRef.createComponent(componentFactory);
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(menu.component);
+      const componentRef = viewContainerRef.createComponent(componentFactory, 0, this.injector);
       (<AMenuComponent>componentRef.instance).data = menu.data;
-    });
-  }
+      if(this.menuSub$){
+        this.menuSub$.unsubscribe();
+      }
+      this.menuSub$ = (<AMenuComponent>componentRef.instance).actionRequired.subscribe(
+        action => this.actionRequired.next(action)
+      );
+    }
 }

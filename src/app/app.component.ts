@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Game } from './game/game';
 import { MenuService } from './menu/menu.service';
+import { Actions } from './menu/action.enum';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,8 @@ import { MenuService } from './menu/menu.service';
   styleUrls: [ './app.component.css' ]
 })
 export class AppComponent  implements OnInit{
+  private game:Game;
+
   name = 'Angular';
   activeMenu;
   constructor(private menu:MenuService){
@@ -16,12 +19,16 @@ export class AppComponent  implements OnInit{
   }
 
   ngOnInit(){
-    const game = new Game("canvas");
-    game.start();
+    this.game = new Game("canvas");
+    this.game.start();
 
-    game.actionRequired.subscribe(action => {
+    this.game.actionRequired.subscribe(action => {
       console.log("action required : ", action);
       this.menu.activateMenu(action);
     })
+  }
+
+  onActionRequired(action: Actions){
+    console.log(action);
   }
 }

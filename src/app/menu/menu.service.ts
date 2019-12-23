@@ -11,7 +11,9 @@ export enum MENUS {
   MAIN = 'main',
 };
 
-@Injectable({providedIn: 'root'})
+@Injectable({
+  providedIn: 'root'
+})
 export class MenuService {
   private menus: Map<string, MenuItem> = new Map();
   private activeMenu$: BehaviorSubject<MenuItem> = new BehaviorSubject<MenuItem>(null);
