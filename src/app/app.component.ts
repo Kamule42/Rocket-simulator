@@ -30,7 +30,7 @@ export class AppComponent  implements OnInit{
 
   onActionRequired(action: Actions){
     if(Actions.NEW_GAME === action){
-      this.menu.activateMenu(MENUS.NEW_GAME)
+      this.menu.activateMenu(MENUS.NEW_GAME);
     }
   }
 }

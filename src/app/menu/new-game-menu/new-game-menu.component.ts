@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { MenuComponent } from '../menu-component';
 import { Actions } from '../actions.enum';
@@ -11,7 +11,7 @@ import { Actions } from '../actions.enum';
 export class NewGameMenuComponent implements OnInit, MenuComponent {
 
 
-  @Input() data: any;
+  @Output('actionRequired')
   actionRequired$: Subject<Actions> = new Subject();
 
   constructor() { }

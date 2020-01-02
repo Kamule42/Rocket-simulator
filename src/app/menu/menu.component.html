@@ -1,3 +1,6 @@
 <div>
-  <ng-template menu-host></ng-template>
+  <app-main-menu *ngIf="currentMenu === menus.MAIN"
+  (actionRequired)='actionRequired.next($event)'></app-main-menu>
+  <app-new-game-menu *ngIf="currentMenu === menus.NEW_GAME"
+  (actionRequired)='actionRequired.next($event)'></app-new-game-menu>
 </div>

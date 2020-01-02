@@ -17,25 +17,16 @@ export enum MENUS {
   providedIn: 'root'
 })
 export class MenuService {
-  private menus: Map<string, MenuItem> = new Map();
-  private activeMenu$: BehaviorSubject<MenuItem> = new BehaviorSubject<MenuItem>(null);
+  private activeMenu$: BehaviorSubject<MENUS> = new BehaviorSubject<MENUS>(MENUS.NONE);
 
   constructor() {
-    this.init();
   }
 
-  public get activeMenu():  BehaviorSubject<MenuItem>{
+  public get activeMenu():  BehaviorSubject<MENUS>{
     return this.activeMenu$;
   }
   public activateMenu(menu: MENUS): void{
     console.log('menu activated', menu)
-    this.activeMenu$.next(this.menus.get(menu.toString()));
+    this.activeMenu$.next(menu);
   }
-
-  private init(){
-    this.menus.set(MENUS.NONE.toString(), null);
-    this.menus.set(MENUS.MAIN.toString(), new MenuItem(MainMenuComponent, {}));
-    this.menus.set(MENUS.NEW_GAME.toString(), new MenuItem(NewGameMenuComponent, {}));
-  }
-
 }

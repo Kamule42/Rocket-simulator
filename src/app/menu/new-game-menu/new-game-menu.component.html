@@ -1,7 +1,6 @@
-<form>
+<form #myForm="ngForm">
   <div class="flex one">
-    New game
-    <input />
+    <input type="text" name="game_name" placeholder="Game name">
     <button (click)="newGame()">New game</button>
   </div>
 </form>>

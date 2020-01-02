@@ -3,7 +3,7 @@ import { Component, ViewChild, ComponentFactoryResolver, Injector, Output, Event
 import { Observable, Subscription } from 'rxjs';
 
 import { MenuDirective} from '../directives/menu.directive';
-import { MenuService } from './menu.service';
+import { MenuService, MENUS } from './menu.service';
 import { MenuComponent as AMenuComponent} from './menu-component';
 import {Actions } from './action.enum';
 
@@ -14,11 +14,11 @@ import {Actions } from './action.enum';
 })
 export class MenuComponent {
 
-  @ViewChild(MenuDirective, {static: true})
-  menuHost: MenuDirective;
-
   @Output()
   actionRequired = new EventEmitter<Actions>();
+
+  currentMenu: MENUS = MENUS.NONE;
+  menus = MENUS;
 
   private menuSub$: Subscription;
 
@@ -28,28 +28,6 @@ export class MenuComponent {
     menuService: MenuService
   ) {
     console.log(injector);
-    menuService.activeMenu.subscribe(menu => this.loadMenu(menu));
+    menuService.activeMenu.subscribe(menu => this.currentMenu = menu);
   }
-
-  private loadMenu(menu){
-      if (!this.menuHost){
-        return;
-      }
-      const viewContainerRef = this.menuHost.viewContainerRef;
-      if(viewContainerRef){
-        viewContainerRef.clear();
-      }
-      if(menu === null){
-        return;
-      }
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(menu.component);
-      const componentRef = viewContainerRef.createComponent(componentFactory, 0, this.injector);
-      (<AMenuComponent>componentRef.instance).data = menu.data;
-      if(this.menuSub$){
-        this.menuSub$.unsubscribe();
-      }
-      this.menuSub$ = (<AMenuComponent>componentRef.instance).actionRequired.subscribe(
-        action => this.actionRequired.next(action)
-      );
-    }
 }
