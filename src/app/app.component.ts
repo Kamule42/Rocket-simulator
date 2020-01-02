@@ -12,7 +12,7 @@ import { Actions } from './menu/action.enum';
 export class AppComponent  implements OnInit{
   private game:Game;
 
-  name = 'Space';
+  name = 'Space ride';
   activeMenu;
   constructor(private menu:MenuService){
 
