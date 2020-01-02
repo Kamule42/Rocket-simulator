@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Game } from './game/game';
-import { MenuService } from './menu/menu.service';
+import { MenuService, MENUS } from './menu/menu.service';
 import { Actions } from './menu/action.enum';
 
 @Component({
