@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Game } from './game/game';
 import { MenuService, MENUS } from './menu/menu.service';
-import { Actions } from './menu/action.enum';
+import { Actions } from './menu/actions.enum';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +29,8 @@ export class AppComponent  implements OnInit{
   }
 
   onActionRequired(action: Actions){
-    console.log(action);
+    if(Actions.NEW_GAME === action){
+      this.menu.activateMenu(MENUS.NEW_GAME)
+    }
   }
 }

@@ -4,11 +4,13 @@ import { BehaviorSubject } from 'rxjs';
 
 
 import { MainMenuComponent }   from './main-menu/main-menu.component';
+import { NewGameMenuComponent }   from './new-game-menu/new-game-menu.component';
 import { MenuItem }            from './menu-item';
 
 export enum MENUS {
   NONE = 'none',
   MAIN = 'main',
+  NEW_GAME = 'new_game',
 };
 
 @Injectable({
@@ -33,6 +35,7 @@ export class MenuService {
   private init(){
     this.menus.set(MENUS.NONE.toString(), null);
     this.menus.set(MENUS.MAIN.toString(), new MenuItem(MainMenuComponent, {}));
+    this.menus.set(MENUS.NEW_GAME.toString(), new MenuItem(NewGameMenuComponent, {}));
   }
 
 }
