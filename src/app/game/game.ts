@@ -1,4 +1,4 @@
-import {Engine, Color, DisplayMode} from 'excalibur';
+import {Engine, Color, DisplayMode, Input} from 'excalibur';
 import { BehaviorSubject  } from 'rxjs';
 
 import { HomeScene } from './scenes/index';
@@ -14,6 +14,7 @@ export class Game extends Engine{
         width: 1000,
         height: 1000,
         displayMode: DisplayMode.Container,
+        pointerScope: Input.PointerScope.Canvas
     })
     this.backgroundColor = Color.fromHex("0A0863");
 
