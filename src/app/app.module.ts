@@ -14,6 +14,6 @@ import { NewGameMenuComponent } from './menu/new-game-menu/new-game-menu.compone
   declarations: [
     AppComponent, MainMenuComponent, MenuDirective, MenuComponent, NewGameMenuComponent, ],
   bootstrap:    [ AppComponent ],
-  entryComponents: [MainMenuComponent],
+  entryComponents: [MainMenuComponent, ],
 })
 export class AppModule { }
